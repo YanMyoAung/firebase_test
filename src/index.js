@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue, set, child ,push , update,remove} from "firebase/database";// Import only the Firebase services you need
+import { getDatabase, ref, onValue, set, child, push, update, remove } from "firebase/database";// Import only the Firebase services you need
 
 const firebaseConfig = {
     apiKey: "AIzaSyCJ6fuW1hOf8m5pComNSu2HVHhnXWQIFww",
@@ -18,31 +18,30 @@ const db = getDatabase(app);
 const usersRef = ref(db, 'users');
 
 
-function writeUserData(age, gender,  name) {
-    let unique_id = push(child(usersRef,'users')).key;
-    set(ref(db, 'users/' + unique_id), {
+function writeUserData(age, gender, name) {
+    //let unique_id = push(child(usersRef,'users')).key;
+    let new_user_ref = push(usersRef);
+    set(new_user_ref, {
         age, gender, name
     });
-
 }
 
-function updateUserData(id,userData){
-    let userref = ref(db,"users/" + id);
-    update(userref,userData)
-    .then(()=> console.log("success"))
-    .catch(()=> console.error("error"));
+function updateUserData(id, userData) {
+    let userref = ref(db, "users/" + id);
+    update(userref, userData)
+        .then(() => console.log("success"))
+        .catch(() => console.error("error"));
 }
 let newUserData = {
-    age : 56,
-    gender : "female",
-    name : "helloworlds"
+    age: 56,
+    gender: "female",
+    name: "hellowosrlds"
 }
 
-updateUserData("NxxSe_R7LUChkjrkgVV",newUserData);
+//updateUserData("Nxx_uYQyqddjAqtNjDa", newUserData);
 
 
-
-//.writeUserData(4,'male','mgmgsoe');
+document.getElementById("add").addEventListener("click", () => writeUserData(4, 'male', 'mgmgsoe'));
 
 
 // Listen for changes to the 'users' node continuously
@@ -60,6 +59,7 @@ onValue(usersRef, (snapshot) => {
         console.log('No users found.');
     }
 });
+
 
 //remove(usersRef);
 
