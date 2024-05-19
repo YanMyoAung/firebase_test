@@ -35,6 +35,11 @@ input[type=text],input[type=number], input[type=file], select {
     cursor: pointer;
   }
 
+  .profile_img{
+    width: 130px;
+    height: auto;
+  }
+
   button{
     background-color: #4CAF50;
     color: white;

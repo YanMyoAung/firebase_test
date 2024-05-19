@@ -14,7 +14,9 @@ document.getElementById('saveUser').addEventListener('click', createUser);
 
 
 function pageLoad() {
-    document.getElementById('profile').value = "";
+    document.getElementById('fname').value = '';
+    document.getElementById('age').value = '';
+    document.getElementById('profile').value = '';
     document.getElementById('upd_id').value = " ";
     document.getElementById('updateUser').addEventListener("click", update_user);
     const usersRefOrderedByAge = query(usersRef);
@@ -71,7 +73,9 @@ function createUser() {
             })
             .catch(() => console.error("error upload profile"));
     }
-
+    document.getElementById('fname').value = '';
+    document.getElementById('age').value = '';
+    document.getElementById('profile').value = '';
 }
 
 function update_user_bind(id) {
@@ -112,7 +116,7 @@ function loadUsersTable(userList) {
     if (userList !== null) {
 
         for (const data of userList) {
-            table.innerHTML += template_users(data.name, data.gender, data.age, data.country, data.id); // pass the user id
+            table.innerHTML += template_users(data.name, data.gender, data.age, data.country, data.id,data.profile_url); // pass the user id
         }
         attachEventListeners(); // attach event listeners after creating all delete buttons
     }
@@ -142,8 +146,9 @@ function attachEventListeners() {
     });
 }
 
-function template_users(name, gender, age, country, id) {
+function template_users(name, gender, age, country, id,img_url) {
     return `<tr>
+    <td><img src=${img_url} class="profile_img"/> </td>
     <td>${name}</td>
     <td>${gender}</td>
     <td>${age}</td>
@@ -155,6 +160,7 @@ function template_users(name, gender, age, country, id) {
 
 function template_users_th() {
     return `<tr>
+    <th>Profile</th>
     <th>Name</th>
     <th>Gender</th>
     <th>Age</th>
