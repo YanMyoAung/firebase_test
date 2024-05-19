@@ -8,10 +8,13 @@
 }
 
 #container_two{
-    width: 80%;
+    width: 20%;
 }
 
-input[type=text],input[type=number], select {
+#container_three{
+  width: 60%;
+}
+input[type=text],input[type=number], input[type=file], select {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -21,7 +24,7 @@ input[type=text],input[type=number], select {
     box-sizing: border-box;
   }
   
-  input[type=submit],input[type=button] {
+  input[type=submit],input[type=button], input[type=file] {
     width: 100%;
     background-color: #4CAF50;
     color: white;

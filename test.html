@@ -18,6 +18,7 @@
           <div class="modal-body">
             <form>
                 <br/>
+                <input type="hidden" id="upd_id" name="firstname" placeholder="Your name..">
                 <label for="fname">First Name</label>
                 <input type="text" id="upd_name" name="firstname" placeholder="Your name..">
             
@@ -50,7 +51,7 @@
         <div id="container_one">
             <div>
                 <form>
-                  <input type="text" id="upd_id" name="firstname" placeholder="Your name.." hidden>
+               
                   <label for="fname">First Name</label>
                   <input type="text" id="fname" name="firstname" placeholder="Your name..">
               
@@ -59,7 +60,8 @@
               
                   <label for="age">Age</label>
                   <input type="number" id="age" name="lastname" placeholder="Your Age..">
-              
+                  <label for="img">Profile Image</label>
+                  <input type="file" id="profile" name="lastname" placeholder="Upload Profile Image.." >
                   <label for="country">Country</label>
                   <select id="country" name="country">
                     <option value="australia">Australia</option>
@@ -76,9 +78,11 @@
               </div>
         </div>
         <div id="container_two">
-            <table id="customers"></table>
+            
         </div>
-        
+        <div id="container_three">
+          <table id="customers"></table>
+      </div>
     </div>
 
     <script src="dist/testbundle.js" type="module"></script>
