@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, onValue, set, push, update, remove, query } from "firebase/database";// Import only the Firebase services you need
 import { firebaseConfig } from "./config.js";
-import { ref as storageRef, getStorage, getStream, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref as storageRef, getStorage, getStream, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 
 
 const app = initializeApp(firebaseConfig);
@@ -45,19 +45,19 @@ function createUser() {
     const gender = document.getElementById('gender').value;
     const country = document.getElementById('country').value;
     const profile = document.getElementById("profile");
-    let profile_url = "default";
     if (profile.files.length !== 0) {
         const userStorageRef = storageRef(storage, 'users/' + profile.value);
+        const image_name = profile.value;
         uploadBytes(userStorageRef, profile.files[0])
             .then((snapshot) => {
                 getDownloadURL(snapshot.ref).then((url) => {
-                    profile_url = url;
                     const data = {
                         name,
                         age,
                         gender,
                         country,
-                        profile_url
+                        url,
+                        image_name
                     };
                     const newUserRef = push(usersRef);
 
@@ -116,24 +116,28 @@ function loadUsersTable(userList) {
     if (userList !== null) {
 
         for (const data of userList) {
-            table.innerHTML += template_users(data.name, data.gender, data.age, data.country, data.id,data.profile_url); // pass the user id
+            table.innerHTML += template_users(data.name, data.gender, data.age, data.country, data.id,data.url,data.image_name); // pass the user id
         }
         attachEventListeners(); // attach event listeners after creating all delete buttons
     }
 }
 
-function deleteUser(id) {
+function deleteUser(id,url) {
     let userRef = ref(db, "users/" + id);
-    remove(userRef).then(() => console.log("success delete user"))
-        .catch(() => console.error("error delete user"));
+    const userStorageRef = storageRef(storage, 'users/' + url);
+    remove(userRef).then(() => {
+        deleteObject(userStorageRef).then(()=>console.log("success delete img")).catch(()=> console.error("error deleting img"));
+    })
+    .catch(() => console.error("error delete user"));
 }
 
 function attachEventListeners() {
     const deleteButtons = document.querySelectorAll('.delete-btn');
     deleteButtons.forEach(button => {
         button.addEventListener('click', function () {
-            const userId = this.dataset.userId; // retrieve user id from data attribute
-            deleteUser(userId);
+            const userId = this.dataset.userId;
+            const image_url = this.dataset.userUrl; 
+            deleteUser(userId,image_url);
         });
     });
 
@@ -146,14 +150,14 @@ function attachEventListeners() {
     });
 }
 
-function template_users(name, gender, age, country, id,img_url) {
+function template_users(name, gender, age, country, id,img_url,img_name) {
     return `<tr>
     <td><img src=${img_url} class="profile_img"/> </td>
     <td>${name}</td>
     <td>${gender}</td>
     <td>${age}</td>
     <td>${country}</td>
-    <td><button class="delete-btn" data-user-id="${id}">Delete</button></td>
+    <td><button class="delete-btn" data-user-id="${id}" data-user-url="${img_name}">Delete</button></td>
     <td><button class="update-btn" data-user-id="${id}" >Update</button></td>
   </tr>`;
 }

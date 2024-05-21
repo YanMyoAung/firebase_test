@@ -4,13 +4,14 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode=development",
-    "watch" : "webpack --watch"
+    "watch": "webpack --watch"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "firebase": "^10.12.0"
+    "firebase": "^10.12.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "webpack": "^5.91.0",
