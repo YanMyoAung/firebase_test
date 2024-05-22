@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getDatabase, ref, onValue, set, push, update, remove, query } from "firebase/database";// Import only the Firebase services you need
 import { firebaseConfig } from "./config.js";
 import { ref as storageRef, getStorage, getStream, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
-
+import {  getAuth, onAuthStateChanged ,} from "firebase/auth";
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
@@ -184,3 +184,13 @@ window.onclick = function (event) {
         document.getElementById("myModal").style.display = "none";
     }
 };
+
+
+const auth = getAuth(app);
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log("login");
+  } else {
+    console.log("no login");
+  }
+});

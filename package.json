@@ -11,6 +11,7 @@
   "description": "",
   "dependencies": {
     "firebase": "^10.12.0",
+    "firebaseui": "^6.1.0",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
